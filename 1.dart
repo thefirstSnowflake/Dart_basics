@@ -19,12 +19,12 @@ class DelimetersCalculator
     return second;
   }
 
-  /*int lcm(int first, int second) //НОК
+double lcm(int first, int second) //НОК
   {
-
+    return (first * second)/(gcd(first, second));
   }
 
-  List<int> primeFactors() //разделить число на простые множители
+ /* List<int> primeFactors() //разделить число на простые множители
   {
 
   }*/
@@ -39,4 +39,6 @@ void main() {
   print(newNumbers.gcd(4, 80));
   print(newNumbers.gcd(80, 4));
   print(newNumbers.gcd(0, 7));
+  print(newNumbers.gcd(10000, 30));
+  print(newNumbers.lcm(100, 50));
 }
