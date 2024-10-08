@@ -255,26 +255,26 @@ class User {
   User(this.id, this.status, this.email);
 }
 
-class AdminUser extends User with cutMail {
-  //1 наследник
+class AdminUser extends User with cutMail { //наследник от User - администратор, на который повешен миксин
+  //1-й наследник
   AdminUser(int id, String status, String email) : super(id, status, email);
 }
 
 mixin cutMail on User {
-  //миксин, возвращает название почтовой системы
-  String getMailSystem(String email){
-      return email.substring(email.indexOf("@") + 1, email.length);
-  }
+  //миксин
+  //геттер, в котором возвращается название почтовой системы
+  String get getMailSystem =>
+      email!.substring(email!.indexOf("@") + 1, email!.length); //возвращает подстроку после @ в почте
 }
 
 class GeneralUser extends User {
-  //2 наследник
+  //2-й наследник
   GeneralUser(int id, String status, String email) : super(id, status, email);
 }
 
-class userManager<T extends User> {
+class userManager<T extends User> { //Т - обязательно User или его наследник
   //generic
-  List<T> listOfUsers = []; //T подходит потому что есть классы User и AdminUser
+  List<T> listOfUsers = []; 
 
   void addUser(T user) {
     listOfUsers.add(user);
@@ -287,9 +287,12 @@ class userManager<T extends User> {
   void getUsers() {
     for (T user in listOfUsers) {
       if (user.status == "admin") {
+        AdminUser adminUser = user as AdminUser;
+        print("${user.id} ${user.status} ${user.getMailSystem}");
+      }
+      else{ 
         print("${user.id} ${user.status} ${user.email}");
       }
-      print("${user.id} ${user.status} ${user.email}");
     }
   }
 }
@@ -421,7 +424,16 @@ void main() {
   print("\n");
   //№8
   {
+    final dataOfUsers = userManager(); //объект с набором пользователей
+    {
+      final newUser = AdminUser(123, "admin", "user173@mail.ru");
+      final newUser1 = AdminUser(456, "user", "user273@gmail.com");
+      final newUser2 = AdminUser(789, "admin", "user373@yandex.ru");
+      dataOfUsers.addUser(newUser);
+      dataOfUsers.addUser(newUser1);
+      dataOfUsers.addUser(newUser2);
 
-    
+      dataOfUsers.getUsers();
+    }
   }
 }
