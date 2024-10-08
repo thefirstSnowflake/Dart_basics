@@ -18,16 +18,35 @@ class DelimetersCalculator {
         : first ~/ gcd(first, second) * second;
   }
 
-  /*List<int> primeFactors(int number) //разделить число на простые множители
+  bool isPrime(int number) //проверка простого числа
   {
-    List <int> listOfPrimeFactors;
-
-    for (int i = (number ~/ 2); i > 0 ; i--)
-    {
-
+    for (int i = 2; i < number ~/ 2; i++){
+      if (number % i == 0){
+        return false;
+      }
     }
-    return List<int> listOfPrimeFactors;
-  }*/
+    return true;
+  }
+
+  List<int> primeFactors(int number) //разделить число на простые множители
+  {
+    List <int> listOfPrimeFactors = [1];
+    int i = 2; //начальный делитель
+    while(i != number){
+      if (number % i == 0 && isPrime(i) == true)
+      {
+        listOfPrimeFactors.add(i);
+        number ~/= i; //если число добавилось в список, то множитель остается прежним для след. числа
+      }
+      else{
+        i++; //если не добавилось, то ищем множитель дальше
+      }
+    }
+    if (isPrime(number) == true){ //выполнится, если даже начальное число простое
+      listOfPrimeFactors.add(number);
+    }
+    return listOfPrimeFactors;
+  }
 }
 
 //2. Перевод из бинарной СС в десятичную и наоборот
@@ -268,7 +287,7 @@ class userManager<T extends User> {
   void getUsers() {
     for (T user in listOfUsers) {
       if (user.status == "admin") {
-        print("${user.id} ${user.status} ${user.getMailSystem(user.email)}");
+        print("${user.id} ${user.status} ${user.email}");
       }
       print("${user.id} ${user.status} ${user.email}");
     }
@@ -276,6 +295,7 @@ class userManager<T extends User> {
 }
 
 void main() {
+  //№1
   final newNumbers = DelimetersCalculator();
   {
     print(newNumbers.gcd(1, 20));
@@ -286,24 +306,31 @@ void main() {
     print(newNumbers.gcd(0, 7));
     print(newNumbers.gcd(0, 0));
     print(newNumbers.gcd(-2, 0));
-  }
-  print("\n");
-  {
+
     print(newNumbers.lcm(0, 5));
     print(newNumbers.lcm(25, 10));
     print(newNumbers.lcm(10000, 30));
     print(newNumbers.lcm(0, 0));
+
+    List<int> listOfPrimeAnswer = newNumbers.primeFactors(135643); //разложение на простые множители
+    for (final factor in listOfPrimeAnswer)
+    {
+      print("Prime factor: $factor");
+    }
+
   }
+  //№2
   print("\n");
   final convertedNum = ConversionCalculator();
   {
-    print(convertedNum.toBinary(54));
+    print(convertedNum.toBinary(54)); //в двоичную
     print(convertedNum.toBinary(14401));
     print(convertedNum.toBinary(1));
-    print(convertedNum.toDecimal("110"));
+    print(convertedNum.toDecimal("110")); //в десятичную СС
     print(convertedNum.toDecimal("1011010"));
   }
   print("\n");
+  //№3-5
   final selectedSequence = ElementsSelection();
   {
     List<String> answer;
@@ -354,6 +381,7 @@ void main() {
       print(element);
     }
   }
+  //№6
   print("\n");
   {
     final myPoint = Point(3, 7, -2);
@@ -376,9 +404,9 @@ void main() {
     // print(1000500.getNRoot(0)); //исключение
     //print((-27).getNRoot(3)); //исключение
 
-    /*
+    /* попробуем try-catch
     double root;
-    try { //тест try-catch
+    try { 
       root = 1000500.getNRoot(0); //выпадет с исключением, т.к. корень в 0 степени
     }catch (e){
       print("Exception thrown.");
@@ -391,5 +419,9 @@ void main() {
     }*/
   }
   print("\n");
-  {}
+  //№8
+  {
+
+    
+  }
 }
