@@ -158,9 +158,9 @@ class ElementsSelection {
 
 //№6
 class Point {
-  final int? x, y, z;
+  final int? _x, _y, _z;
 
-  Point(this.x, this.y, this.z);
+  Point(this._x, this._y, this._z);
 
   factory Point.startCoord() {
     return Point(0, 0, 0);
@@ -171,24 +171,24 @@ class Point {
   }
 
   void displayFact() {
-    print("$x $y $z");
+    print("$_x $_y $_z");
   }
 
   double distanceTo(Point another) {
-    return sqrt(pow((another.x! - x!), 2) +
-        pow((another.y! - y!), 2) +
-        pow((another.z! - z!), 2));
+    return sqrt(pow((another._x! - _x!), 2) +
+        pow((another._y! - _y!), 2) +
+        pow((another._z! - _z!), 2));
   }
 }
 
 //высчитать площадь треугольника по трем точкам
 double getTriangleSquare(Point a, Point b, Point c) {
   List<int> ab = [
-    b.x! - a.x!,
-    b.y! - a.y!,
-    b.z! - a.z!
+    b._x! - a._x!,
+    b._y! - a._y!,
+    b._z! - a._z!
   ]; //получим координаты векторов AB и AC
-  List<int> ac = [c.x! - a.x!, c.y! - a.y!, c.z! - a.z!];
+  List<int> ac = [c._x! - a._x, c._y! - a._y, c._z! - a._z];
   List<int> vecProduct = [
     //вычислим миноры
     ab[1] * ac[2] - ac[1] * ab[2],
@@ -246,7 +246,7 @@ extension on num {
     return root;
   }
 }
-
+//№8
 class User {
   final int id;
   final String status;
